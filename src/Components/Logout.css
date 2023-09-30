@@ -1,0 +1,15 @@
+.logout {
+    text-align: right;
+    padding-top: 24px;
+    padding-right: 6%;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.logout img {
+    transform: scale(0.8);
+    padding: 5px;
+    position: relative;
+    top: 10px;
+    cursor: pointer;
+}

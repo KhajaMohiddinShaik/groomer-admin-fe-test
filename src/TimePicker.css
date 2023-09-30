@@ -1,0 +1,104 @@
+
+.time-picker-container {
+    position: relative;
+  }
+  
+  .time-picker-input {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .time-picker-input input {
+    padding: 8px;
+  }
+  
+  .time-picker-icon {
+    cursor: pointer;
+    margin-left: 5px;
+  }
+  
+  .time-picker-input input {
+    background: transparent;
+    padding: 0px;
+    border: none;
+    color: #FFF;
+    width: 70px;
+    font-size: 15px;
+  }
+  
+  .time-picker-input input:focus {
+    outline: none;
+  }
+  
+  .time-picker-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 150px;
+    height: 280px;
+    background-color: #383838;
+    /* border: 1px solid #ccc; */
+    border-radius: 15px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    text-align: center;
+    z-index: 9999;
+  }
+  
+  .time-picker-partitions {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .picker-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  
+  .picker-column div {
+    cursor: pointer;
+    padding: 5px;
+    /* border-bottom: 1px solid #ccc; */
+  }
+  
+  .scrollable {
+    max-height: 220px;
+    overflow-y: auto;
+  }
+  
+  .time-picker-ok-btn {
+    margin-top: 20px;
+    /* Add margin between the partitions and the button */
+    /* align-self: flex-end; */
+    padding: 8px;
+    background-color: rgba(138, 136, 136, 0.5);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .time-picker-ok-btn:hover {
+    background-color: rgba(26, 26, 26, 0.5);
+  }
+  
+  /* Adjust the height of each partition to make them equal */
+  .picker-column {
+    height: 220px;
+  }
+  
+  /* Remove border-bottom for the last item in each partition */
+  .picker-column div:last-child {
+    border-bottom: none;
+  }
+  
+  /* Add a class to represent the selected item in each partition */
+  .picker-column div.selected {
+    background-color: rgba(26, 26, 26, 0.5);
+    color: #fff;
+  }
+  

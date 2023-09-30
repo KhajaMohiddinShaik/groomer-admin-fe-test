@@ -1,0 +1,532 @@
+.active {
+  color: #000;
+  background: #fff;
+}
+
+body {
+  background: #1a1717;
+  color: #fff;
+}
+
+/* App.css */
+
+/* Dropdown Container */
+/* .dropdown-container {
+  position: relative;
+  display: inline-block;
+} */
+
+/* Dropdown Button */
+
+.dropdown {
+  font-size: 12px;
+}
+
+.dropdown-button {
+  /* padding: 10px 20px; */
+  /* background-color: #f1f1f1; */
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown List */
+/* .dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: green;
+  border: 1px solid #ccc;
+  border-top: none;
+  display: none;
+} */
+
+/* .dropdown-container.open .dropdown-list {
+  display: block;
+} */
+
+/* Salon Table */
+/* .salon-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.salon-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+} */
+
+/* Selected Option */
+
+.dropdown-option.selected {
+  background-color: #000;
+}
+
+.dropdown-search {
+  margin-bottom: 10px;
+}
+
+.dropdown-option {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  background: rgba(217, 217, 217, 0.25);
+  border-radius: 20px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* Tick Mark */
+.tick-mark {
+  text-align: right;
+}
+
+/* .tick-mark span {
+  color: green;
+  font-weight: bold;
+} */
+
+.credentials {
+  border-radius: 10px;
+  background: rgba(123, 123, 123, 0.25);
+  padding: 10px;
+}
+
+.Navbar {
+  margin-left: 15vw;
+  margin-bottom: 5vh;
+  color: #fff;
+}
+
+.Navbar span {
+  margin-right: 50px;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.Navbar .active {
+  background: none;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.languages-container {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+}
+
+.checkbox-group {
+  margin-bottom: 10px;
+}
+
+.checkbox-label {
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.checkbox-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkbox-custom {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 2px;
+  height: 16px;
+  width: 16px;
+  /* background-color: #fff; */
+  border: 2px solid #ccc;
+  border-radius: 50%;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #757575;
+  border-radius: 25px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a1717;
+  border: 1px solid #757575;
+  border-radius: 25px;
+}
+
+/* .checkbox-label:hover .checkbox-custom {
+  background-color: #f1f1f1;
+} */
+
+.combo .delete-button {
+  opacity: 0;
+}
+
+.combo:hover .delete-button {
+  opacity: 1;
+  /* font-size: 22px;
+  position: relative;
+  top : 6px;
+  padding:0; */
+}
+
+.fsalon .delete-button {
+  opacity: 0;
+  position: relative;
+  top: 4px;
+}
+
+.fsalon:hover .delete-button {
+  opacity: 1;
+  /* font-size: 22px;
+  position: relative;
+  top : 6px;
+  padding:0; */
+}
+
+.submit {
+  border-radius: 38px;
+  background: #ff6548;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+::placeholder {
+  font-size: 10px;
+}
+
+.ownerdetails input {
+  background: none;
+  padding: 0;
+}
+
+.form-group {
+  display: flex;
+  padding-left: 8vw;
+  padding-bottom: 10px;
+  /* align-items: center; */
+}
+
+.upload {
+  border-radius: 10px;
+  background: rgba(123, 123, 123, 0.25);
+  border: 0;
+  width: 12vw;
+  color: #fff;
+  padding: 5px 20px;
+  text-align: center;
+}
+
+.photoContainer {
+  /* padding: 0 6px; */
+  /* float: right; */
+  width: 450px;
+  background: rgba(123, 123, 123, 0.25);
+  min-height: 200px;
+  border-radius: 10px;
+  margin-top: 10px;
+  /* width: 24.99999%; */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 100px;
+  /* margin-top: 60px; */
+}
+
+input:focus {
+  border: 0;
+  outline: none;
+}
+
+textarea:focus {
+  border: 0;
+  outline: none;
+}
+
+.label {
+  width: 200px;
+  text-align: left;
+  padding-right: 10px;
+}
+
+.input1 {
+  align-items: center;
+  flex-grow: 1;
+  max-width: 400px;
+}
+
+input {
+  border-radius: 10px;
+  background: rgba(123, 123, 123, 0.25);
+  border: 0;
+  color: #fff;
+  padding: 5px 20px;
+}
+
+textarea {
+  margin-top: 0.5px;
+  margin-bottom: -4px;
+  border-radius: 10px;
+  background: rgba(123, 123, 123, 0.25);
+  border: 0;
+  color: #fff;
+  padding: 5px 20px;
+}
+
+.input {
+  align-items: center;
+  flex-grow: 1;
+}
+
+textarea {
+  resize: none;
+}
+.select-wrapper select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  color: #fff;
+  border: 0;
+  padding: 0px 10px;
+  border-radius: 4px;
+}
+
+.select-wrapper span {
+  color: white;
+  /* padding: 5px; */
+}
+
+.container {
+  height: 100vh;
+  position: relative;
+  /* border: 3px solid green; */
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.logobig {
+  transform: scale(3);
+  position: relative;
+  top: 50%;
+  margin-right: 15vh;
+}
+
+button {
+  border-radius: 10px;
+  background: rgba(123, 123, 123, 0.25);
+  border: 0;
+  padding: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* .checkbox-label input:checked ~ .checkbox-custom {
+  background-color: #2196f3;
+  border-color: #2196f3;
+} */
+
+.checkbox-label input:checked ~ .checkbox-custom:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+/* .thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin: 5px;
+} */
+
+.service-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.service-item .delete-button {
+  display: none;
+}
+
+.service-item:hover .delete-button {
+  display: inline-block;
+  /* width:15px; */
+  /* height: 15px; */
+}
+
+.combo-service .delete-button {
+  display: none;
+}
+
+.combo-service:hover .delete-button {
+  display: inline-block;
+  /* width:15px; */
+  /* height: 15px; */
+}
+
+.delete-button {
+  display: inline-block;
+  margin-left: 10px;
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+.delete-button:hover {
+  color: #cc0000;
+}
+
+.thumbnail-container {
+  position: relative;
+  display: inline-block;
+  margin: 5px;
+}
+.thumbnail-container > img {
+  width: 4rem;
+  height: 4rem;
+}
+.thumbnail {
+  width: 100px;
+  /* height: 100px; */
+  object-fit: cover;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.delete-icon {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 15px;
+  height: 15px;
+  background: #1a1717;
+  color: #fff;
+  font-size: 10px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.delete-icon span {
+  position: relative;
+  top: -0.7px;
+  font-size: 10px;
+}
+
+.deleteicon {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: #1a1717;
+  color: #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.deleteicon:hover {
+  background-color: #cc0000;
+}
+
+.material-icons.md-48 {
+  font-size: 20px;
+}
+
+.thumbnail-container:hover .delete-icon {
+  opacity: 1;
+}
+
+.preview-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.preview-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.close-icon span {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.close-icon:hover {
+  background-color: #333333;
+}
