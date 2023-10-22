@@ -1,25 +1,29 @@
 import "../App.css";
 import OnBoardForm from "./OnBoardForm";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Logo from "./Logo";
 import NavBar from "./NavBar";
 import Logout from "./Logout";
-import { Store } from "../App";
 import { ToastError } from "../Middlewares/Alertpop";
-import Context from "../Context";
+import Context, { getToken, removeToken } from "../Context";
+import Loader from "../Components2/Loader";
+import { useNavigate } from "react-router-dom";
 
 function SalonSearch() {
   const [searchon, setSearchOn] = useState(false);
   const [salonCode, setSalonCode] = useState("");
   const [sendData, setsendData] = useState({});
-  const [isAuth] = useContext(Store);
+  const [loader, setloader] = useState(false);
 
-  const handleSubmit = async (event) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
     setSearchOn(true);
+    setloader(true);
     // console.log(salonCode);
     let headersList = {
       Accept: "*/*",
-      Authorization: `Bearer ${isAuth}`,
+      Authorization: `Bearer ${getToken()}`,
     };
 
     let response = await fetch(`${Context}/admin/salons?code=${salonCode}`, {
@@ -28,8 +32,15 @@ function SalonSearch() {
     });
 
     let data = await response.json();
+    if (data.code === 401) {
+      removeToken();
+      navigate("/");
+      ToastError(data.message);
+      return;
+    }
     if (data.code === 404) {
       setSearchOn(false);
+      setloader(false);
       ToastError("Salon not find with id : " + salonCode);
       return;
     }
@@ -85,6 +96,8 @@ function SalonSearch() {
       combosRev: modifiedDictListCombos,
     });
 
+    setloader(false);
+
     // navigate("/admin", {
     //   state: {
     //     Salondata: data.data,
@@ -125,6 +138,8 @@ function SalonSearch() {
             </div>
           </form>
         )}
+
+        {loader && <Loader x="loader-half" />}
 
         {searchon && sendData.one && (
           <OnBoardForm

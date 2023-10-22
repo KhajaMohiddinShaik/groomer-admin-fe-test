@@ -1,11 +1,13 @@
 import { Navigate } from "react-router-dom";
 import { Store } from "../App";
 import { useContext } from "react";
+import { getToken } from "../Context";
 
 const PublicRoute = ({ children }) => {
   const [isAuth] = useContext(Store);
+  const token = getToken();
 
-  if (sessionStorage.getItem("salon_token") && isAuth) {
+  if (token && isAuth) {
     return <Navigate to="/admin" />;
   }
 

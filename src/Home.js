@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
 import "./App.css";
 import logo from "./images/groomerpsd.svg";
-import login from "./images/login.svg";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import { Store } from "./App";
 import { ToastError, ToastWarning } from "./Middlewares/Alertpop";
-import Context from "./Context";
+import Context, { setToken } from "./Context";
 
 function Home() {
   const navigate = useNavigate();
@@ -54,7 +53,7 @@ function Home() {
 
     // If login is successful, navigate to the '/admin' route
     if (data.message === "Logged in successfully") {
-      sessionStorage.setItem("salon_token", data.data.token);
+      setToken(data.data.token);
       setisAuth(data.data.token);
       navigate("/admin");
     }
@@ -81,9 +80,12 @@ function Home() {
           <input
             type="submit"
             value="Login"
-            style={{ backgroundImage: "url(/images/login.svg)" }}
+            style={{
+              backgroundImage: "url(/images/login.svg)",
+              cursor: "pointer",
+              textTransform: "uppercase",
+            }}
           />
-          <img src={login} alt="Logout" />
         </form>
       </div>
     </div>

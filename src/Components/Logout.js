@@ -4,12 +4,13 @@ import LogoutR from "../images/LogoutRounded.svg";
 import "./Logout.css";
 import { NavLink } from "react-router-dom";
 import { Store } from "../App";
+import { removeToken } from "../Context";
 
 function Logout() {
   const [, setisAuth] = useContext(Store);
 
   const logutFunct = () => {
-    sessionStorage.removeItem("salon_token");
+    removeToken();
     setisAuth(null);
   };
 

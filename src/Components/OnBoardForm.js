@@ -23,7 +23,8 @@ import {
 } from "../Middlewares/Alertpop";
 import Manhood from "./Manhood";
 import MoreOption from "./MoreOption";
-import Context from "../Context";
+import Context, { getToken, removeToken } from "../Context";
+import { ButtonLoader } from "../Components2/Loader";
 
 function OnBoardForm(props) {
   const [isReadOnly, setIsReadOnly] = useState(props.isReadOnly);
@@ -34,6 +35,7 @@ function OnBoardForm(props) {
   const SalonLocation =
     DataSalon?.["salon_location"]?.["coordinates"].join(", ");
 
+  const [loading, setloading] = useState(false);
   // State to manage form inputs
   const [inputs, setInputs] = useState({
     // Initialize input fields with data from DataSalon or default values
@@ -52,7 +54,8 @@ function OnBoardForm(props) {
     slots_number: parseInt(DataSalon?.["salon_slots"]) || 3,
     opening_time: DataSalon?.["salon_opening_time"] || "09:00 AM",
     closing_time: DataSalon?.["salon_closing_time"] || "06:00 PM",
-    lunch_time: DataSalon?.["salon_lunch_time"] || "01:00 PM",
+    lunch_time: DataSalon?.["salon_lunch_start_time"] || "01:00 PM",
+    lunch_time_end: DataSalon?.["salon_lunch_end_time"] || "01:30 PM",
     features: {
       wifi: DataSalon?.["salon_features"]?.["feature_wifi"] || true,
       parking: DataSalon?.["salon_features"]?.["feature_parking"] || false,
@@ -132,13 +135,19 @@ function OnBoardForm(props) {
       try {
         let headersList = {
           Accept: "*/*",
-          Authorization: `Bearer ${sessionStorage.getItem("salon_token")}`,
+          Authorization: `Bearer ${getToken()}`,
         };
         let response = await fetch(`${Context}/admin/salon-code?key=${key}`, {
           headers: headersList,
         });
 
         let data = await response.json();
+        if (data.code === 401) {
+          removeToken();
+          navigate("/");
+          ToastError(data.message);
+          return;
+        }
         if (data.code === 200) {
           setreadsalonCode(true);
           setInputs((values) => ({ ...values, [name]: data.data.salonCode }));
@@ -162,6 +171,7 @@ function OnBoardForm(props) {
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setloading(true);
 
     const allFieldsFilled = services.filter(
       (service) =>
@@ -181,6 +191,7 @@ function OnBoardForm(props) {
         arr !== "opening_time" &&
         arr !== "closing_time" &&
         arr !== "lunch_time" &&
+        arr !== "lunch_time_end" &&
         arr !== "franchiseSalons"
       ) {
         formdata.append(arr, inputs[arr]);
@@ -208,8 +219,12 @@ function OnBoardForm(props) {
     inputs.lunch_time[0] === "0"
       ? (x = inputs.lunch_time.replace("0", ""))
       : (x = inputs.lunch_time);
-    console.log(x, typeof x);
-    formdata.append("lunch_time", x);
+    formdata.append("lunch_start_time", x);
+
+    inputs.lunch_time[0] === "0"
+      ? (x = inputs.lunch_time_end.replace("0", ""))
+      : (x = inputs.lunch_time_end);
+    formdata.append("lunch_end_time", x);
 
     // services
     if (inputs.franchise) {
@@ -233,18 +248,17 @@ function OnBoardForm(props) {
         formdata.append(`photos`, image);
       });
     }
-    if (blockSalon.length > 0) {
-      formdata.append("block_dates", JSON.stringify(blockSalon));
-    }
+
     if (DataSalon) {
       formdata.append("uuid", DataSalon["salon_uuid"]);
     }
     let headersList = {
       Accept: "*/*",
-      Authorization: `Bearer ${sessionStorage.getItem("salon_token")}`,
+      Authorization: `Bearer ${getToken()}`,
     };
 
     if (DataSalon) {
+      formdata.append("block_dates", JSON.stringify(blockSalon));
       const response = await fetch(`${Context}/admin/salon/update`, {
         method: "PATCH",
         body: formdata,
@@ -256,6 +270,7 @@ function OnBoardForm(props) {
         ToastSuccess(data.message);
         Salondata = null;
         setIsReadOnly(true);
+        setloading(false);
       }
     } else {
       let response = await fetch(`${Context}/admin/add-new-salon`, {
@@ -268,9 +283,16 @@ function OnBoardForm(props) {
       let code = data.code;
       if (code === 500 || code === 406) {
         ToastError(data.message);
+        setloading(false);
         return;
       }
-      console.log(data);
+      if (code === 401) {
+        removeToken();
+        navigate("/");
+        ToastError(data.message);
+        return;
+      }
+
       ToastSuccess("successfully created a new salon");
       navigate("/search");
     }
@@ -537,12 +559,18 @@ function OnBoardForm(props) {
               marginBottom: "10vh",
             }}
           >
-            {!isReadOnly && (
+            {!loading && !isReadOnly && (
               <button className="submit" type="submit" disabled={isReadOnly}>
                 {!props.search ? "Save" : "Save Changes"}
               </button>
             )}
-            {!isReadOnly && props.search && (
+            {loading && (
+              <button className="submit" disabled={true}>
+                <ButtonLoader />
+              </button>
+            )}
+
+            {!loading && !isReadOnly && props.search && (
               <button
                 style={{
                   paddingLeft: "50px",
