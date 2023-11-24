@@ -5,6 +5,7 @@ import "../App.css";
 import Logo from "../Components/Logo";
 import NavBar from "../Components/NavBar";
 import Loader from "../Components2/Loader";
+import Context from "../Context";
 
 const AllSalonslist = () => {
   const [isAuth] = useContext(Store);
@@ -41,7 +42,7 @@ const AllSalonslist = () => {
         Authorization: `Bearer ${isAuth}`,
       };
 
-      let response = await fetch(`http://127.0.0.1:8000/admin/all-salons`, {
+      let response = await fetch(`${Context}/admin/all-salons`, {
         method: "GET",
         headers: headersList,
       });

@@ -177,10 +177,7 @@ function OnBoardForm(props) {
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (feed_back.message === "" || feed_back.rating === 0) {
-      ToastError("rating or review should not be empty");
-      return;
-    }
+
     setloading(true);
 
     const allFieldsFilled = services.filter(
@@ -274,6 +271,11 @@ function OnBoardForm(props) {
         setloading(false);
       }
     } else {
+      if (feed_back.message === "" || feed_back.rating === 0) {
+        ToastError("rating or review should not be empty");
+        setloading(false);
+        return;
+      }
       let response = await fetch(`${Context}/admin/add-new-salon`, {
         method: "POST",
         body: formdata,
