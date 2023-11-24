@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./App.css";
 import logo from "./images/groomerpsd.svg";
 import "./Home.css";
@@ -6,15 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { Store } from "./App";
 import { ToastError, ToastWarning } from "./Middlewares/Alertpop";
 import Context, { setToken } from "./Context";
+import Loader from "./Components2/Loader";
 
 function Home() {
   const navigate = useNavigate();
+  const [loading, setloading] = useState(false);
   const [, setisAuth] = useContext(Store);
 
   // Define the handleSubmit function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setloading(true);
     // Extract the username and password from the form elements
     const { username, password } = event.target.elements;
 
@@ -55,6 +57,7 @@ function Home() {
     if (data.message === "Logged in successfully") {
       setToken(data.data.token);
       setisAuth(data.data.token);
+      setloading(true);
       navigate("/admin");
     }
   };
@@ -77,15 +80,19 @@ function Home() {
           <div>
             <input type="text" name="password" placeholder="Password" />
           </div>
-          <input
-            type="submit"
-            value="Login"
-            style={{
-              backgroundImage: "url(/images/login.svg)",
-              cursor: "pointer",
-              textTransform: "uppercase",
-            }}
-          />
+          {loading ? (
+            <Loader />
+          ) : (
+            <input
+              type="submit"
+              value="Login"
+              style={{
+                backgroundImage: "url(/images/login.svg)",
+                cursor: "pointer",
+                textTransform: "uppercase",
+              }}
+            />
+          )}
         </form>
       </div>
     </div>

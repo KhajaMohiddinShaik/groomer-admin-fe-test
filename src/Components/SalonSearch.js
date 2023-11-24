@@ -123,9 +123,12 @@ function SalonSearch() {
                 <input
                   style={{ marginRight: "4vw" }}
                   type="text"
+                  placeholder="HYD1...DEL1"
                   name="SalonCode"
                   value={salonCode}
-                  onChange={(event) => setSalonCode(event.target.value)}
+                  onChange={(event) =>
+                    setSalonCode(event.target.value.toUpperCase())
+                  }
                 />
                 <button
                   className="submit"

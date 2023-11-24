@@ -1,4 +1,4 @@
-const isLocal = false;
+const isLocal = true;
 
 const Context = isLocal
   ? "http://127.0.0.1:8000"

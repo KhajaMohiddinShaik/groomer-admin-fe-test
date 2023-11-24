@@ -8,6 +8,72 @@ body {
   color: #fff;
 }
 
+/* starRating */
+.star {
+  cursor: pointer;
+  font-size: 2rem;
+  color: rgb(77, 75, 75);
+  background-color: none;
+  position: relative;
+  top: -13px;
+  padding-right: 5px;
+}
+
+.activeStar {
+  background: #7b7b7b40;
+  padding: 2px 21px;
+  border-radius: 12px;
+  font-size: large;
+  font-weight: 800;
+  margin-top: -15px;
+}
+
+.selected {
+  color: whitesmoke;
+}
+/* starRating */
+
+/* slotControls */
+.main-box {
+  width: 340px;
+  background-color: #202020;
+  border-radius: 10px;
+  position: relative;
+  padding: 15px;
+  box-sizing: border-box;
+  overflow: auto;
+  margin-top: 12px;
+}
+
+.inner-box {
+  font-size: 10px;
+  /* border: 1px solid #9c9b9b; */
+  background-color: #1e1d1d;
+  border-radius: 14px;
+  padding: 5px 20px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  display: inline-block;
+  position: relative;
+  color: rgb(214, 210, 210);
+}
+
+.closeIcon {
+  position: absolute;
+  top: 1px;
+  right: 4px;
+  cursor: pointer;
+  border-radius: 56% 64% 64%;
+  padding: 5px;
+  font-size: 8px;
+}
+/* slotControls */
+
+.slotControl {
+  padding-left: 103px;
+  padding-top: 7px;
+}
+
 /* App.css */
 
 /* Dropdown Container */
@@ -259,6 +325,10 @@ textarea:focus {
   width: 200px;
   text-align: left;
   padding-right: 10px;
+}
+
+.wt-100 {
+  width: 100px;
 }
 
 .input1 {

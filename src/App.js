@@ -7,6 +7,8 @@ import ProtectedRoute from "./Routes/ProtectedRoute";
 import PublicRoute from "./Routes/PublicRoute";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { SlotGeneration } from "./Components/SlotGeneration";
+import AllSalonslist from "./Components2/AllSalonslist";
 
 export const Store = createContext();
 
@@ -38,6 +40,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <SalonSearch />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/slots"
+              element={
+                <ProtectedRoute>
+                  <SlotGeneration />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/salon-lists"
+              element={
+                <ProtectedRoute>
+                  <AllSalonslist />
                 </ProtectedRoute>
               }
             />

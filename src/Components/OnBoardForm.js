@@ -5,12 +5,12 @@ import Logo from "./Logo";
 import NavBar from "./NavBar";
 import Logout from "./Logout";
 import Credentials from "./Credentials";
-import Franchise from "./Franchise";
 import SalonTimings from "./SalonTimings";
 import LunchTimings from "./LunchTimings";
 import NumSlots from "./NumSlots";
 import Photos from "./Photos";
 import Services from "./Services";
+import CustomRating from "./CustomRating";
 import Combos from "./Combos";
 import Features from "./Features";
 import Languages from "./Languages";
@@ -28,6 +28,7 @@ import { ButtonLoader } from "../Components2/Loader";
 
 function OnBoardForm(props) {
   const [isReadOnly, setIsReadOnly] = useState(props.isReadOnly);
+
   let { Salondata } = props;
   const navigate = useNavigate();
 
@@ -43,14 +44,14 @@ function OnBoardForm(props) {
     password: DataSalon?.salon_password || "***",
     code: DataSalon?.["salon_code"] || "",
     name: DataSalon?.["salon_name"] || "",
+    email: DataSalon?.["salon_email"] || "",
+    description: DataSalon?.["salon_description"] || "",
     type: DataSalon?.["salon_type"] || "male",
     address: DataSalon?.["salon_address"] || "",
     location: SalonLocation || "",
-    franchise: DataSalon?.["salon_franchise"] || false,
     area: DataSalon?.["salon_area"] || "",
     city: DataSalon?.["salon_city"] || "",
     state: DataSalon?.["salon_state"] || "",
-    franchiseSalons: DataSalon?.["salon_franchise_list"] || [""],
     slots_number: parseInt(DataSalon?.["salon_slots"]) || 3,
     opening_time: DataSalon?.["salon_opening_time"] || "09:00 AM",
     closing_time: DataSalon?.["salon_closing_time"] || "06:00 PM",
@@ -66,6 +67,7 @@ function OnBoardForm(props) {
       english: DataSalon?.["salon_languages"]?.["language_english"] || false,
       telugu: DataSalon?.["salon_languages"]?.["language_telugu"] || true,
     },
+    review: DataSalon?.["salon_review"] || "",
     owner_name: DataSalon?.["salon_owner_name"] || "sumanth vartha",
     owner_mobile: DataSalon?.["salon_owner_mobile"] || "9876543210",
     owner_pancard_number:
@@ -92,6 +94,10 @@ function OnBoardForm(props) {
   const [blockSalon, setblockSalon] = useState(
     DataSalon?.["salon_block_dates"] || []
   );
+  const [feed_back, setfeed_back] = useState({
+    rating: 0,
+    message: "",
+  });
 
   // usestate for salon code edit or not
   const [readsalonCode, setreadsalonCode] = useState(false);
@@ -171,6 +177,10 @@ function OnBoardForm(props) {
   // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (feed_back.message === "" || feed_back.rating === 0) {
+      ToastError("rating or review should not be empty");
+      return;
+    }
     setloading(true);
 
     const allFieldsFilled = services.filter(
@@ -191,8 +201,7 @@ function OnBoardForm(props) {
         arr !== "opening_time" &&
         arr !== "closing_time" &&
         arr !== "lunch_time" &&
-        arr !== "lunch_time_end" &&
-        arr !== "franchiseSalons"
+        arr !== "lunch_time_end"
       ) {
         formdata.append(arr, inputs[arr]);
       }
@@ -225,14 +234,6 @@ function OnBoardForm(props) {
       ? (x = inputs.lunch_time_end.replace("0", ""))
       : (x = inputs.lunch_time_end);
     formdata.append("lunch_end_time", x);
-
-    // services
-    if (inputs.franchise) {
-      formdata.append(
-        "franchise_salon",
-        JSON.stringify(inputs.franchiseSalons)
-      );
-    }
     formdata.append("service", JSON.stringify(allFieldsFilled));
     formdata.append("combo_service", JSON.stringify(combos));
     // photos
@@ -292,9 +293,37 @@ function OnBoardForm(props) {
         ToastError(data.message);
         return;
       }
+      if (code === 201) {
+        await addReviewHandler(data.data.response.salon_uuid);
+      }
 
+      // ToastSuccess("successfully created a new salon");
+      // navigate("/search");
+    }
+  };
+
+  const addReviewHandler = async (salonid) => {
+    let headersList = {
+      Accept: "*/*",
+      Authorization: `Bearer ${getToken()}`,
+      "Content-type": "application/json",
+    };
+    let body = JSON.stringify({
+      salon_uuid: salonid,
+      rating: feed_back.rating,
+      message: feed_back.message,
+    });
+    let response = await fetch(`${Context}/admin/feedback`, {
+      method: "POST",
+      body,
+      headers: headersList,
+    });
+    let data = await response.json();
+    if (data.code === 201) {
       ToastSuccess("successfully created a new salon");
       navigate("/search");
+    } else {
+      ToastError(data.message);
     }
   };
 
@@ -372,6 +401,7 @@ function OnBoardForm(props) {
                 onChange={salonCodeHandler}
                 readOnly={isReadOnly ? isReadOnly : readsalonCode}
                 disabled={readsalonCode}
+                autoComplete="false"
               />
             </div>
           </div>
@@ -383,6 +413,20 @@ function OnBoardForm(props) {
                 type="text"
                 name="name"
                 value={inputs.name || ""}
+                onChange={handleChange}
+                size="50"
+                readOnly={isReadOnly}
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="label">Salon Email:</label>
+            <div className="input1">
+              <input
+                style={{ width: "100%" }}
+                type="text"
+                name="email"
+                value={inputs.email || ""}
                 onChange={handleChange}
                 size="50"
                 readOnly={isReadOnly}
@@ -459,11 +503,6 @@ function OnBoardForm(props) {
             setInputs={setInputs}
             isReadOnly={isReadOnly}
           />
-          <Franchise
-            inputs={inputs}
-            setInputs={setInputs}
-            isReadOnly={isReadOnly}
-          />
           <NumSlots
             number={inputs.slots_number}
             inputs={inputs}
@@ -517,6 +556,38 @@ function OnBoardForm(props) {
             setInputs={setInputs}
             isReadOnly={isReadOnly}
           />
+          <div className="form-group">
+            <label className="label">Groomer Rating:</label>
+            <CustomRating feed_back={feed_back} setfeed_back={setfeed_back} />
+          </div>
+          <div className="form-group">
+            <label className="label">Groomer Review:</label>
+            <div className="input1">
+              <textarea
+                style={{ width: "100%" }}
+                type="text"
+                name="review"
+                value={feed_back.message || ""}
+                onChange={(e) =>
+                  setfeed_back({ ...feed_back, message: e.target.value })
+                }
+                readOnly={isReadOnly}
+              />
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="label">Description:</label>
+            <div className="input1">
+              <textarea
+                style={{ width: "100%" }}
+                type="text"
+                name="description"
+                value={inputs.description || ""}
+                onChange={handleChange}
+                readOnly={isReadOnly}
+              />
+            </div>
+          </div>
           <OwnershipDetails
             inputs={inputs}
             setInputs={setInputs}
