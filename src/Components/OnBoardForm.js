@@ -556,25 +556,33 @@ function OnBoardForm(props) {
             setInputs={setInputs}
             isReadOnly={isReadOnly}
           />
-          <div className="form-group">
-            <label className="label">Groomer Rating:</label>
-            <CustomRating feed_back={feed_back} setfeed_back={setfeed_back} />
-          </div>
-          <div className="form-group">
-            <label className="label">Groomer Review:</label>
-            <div className="input1">
-              <textarea
-                style={{ width: "100%" }}
-                type="text"
-                name="review"
-                value={feed_back.message || ""}
-                onChange={(e) =>
-                  setfeed_back({ ...feed_back, message: e.target.value })
-                }
-                readOnly={isReadOnly}
-              />
-            </div>
-          </div>
+          {!DataSalon && (
+            <>
+              <div className="form-group">
+                <label className="label">Groomer Rating:</label>
+                <CustomRating
+                  feed_back={feed_back}
+                  setfeed_back={setfeed_back}
+                />
+              </div>
+              <div className="form-group">
+                <label className="label">Groomer Review:</label>
+                <div className="input1">
+                  <textarea
+                    style={{ width: "100%" }}
+                    type="text"
+                    name="review"
+                    value={feed_back.message || ""}
+                    onChange={(e) =>
+                      setfeed_back({ ...feed_back, message: e.target.value })
+                    }
+                    readOnly={isReadOnly}
+                  />
+                </div>
+              </div>
+            </>
+          )}
+
           <div className="form-group">
             <label className="label">Description:</label>
             <div className="input1">
